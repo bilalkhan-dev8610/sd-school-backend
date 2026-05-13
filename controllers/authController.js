@@ -13,7 +13,8 @@ const generateToken = (id) => {
 // @access  Public
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const email = req.body.email?.toString().trim().toLowerCase();
+    const password = req.body.password?.toString().trim();
 
     if (!email || !password) {
       return res.status(400).json({ success: false, message: 'Please provide email and password' });
@@ -56,7 +57,9 @@ export const getProfile = async (req, res) => {
 // @access  Public (should be secured in production)
 export const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const name = req.body.name?.toString().trim();
+    const email = req.body.email?.toString().trim().toLowerCase();
+    const password = req.body.password?.toString().trim();
 
     const adminExists = await Admin.findOne({ email });
     if (adminExists) {
